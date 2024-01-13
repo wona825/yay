@@ -57,7 +57,15 @@ public class ChatGptService {
                 .bodyValue(objectMapper.writeValueAsString(chatGptRequest))
                 .accept(MediaType.TEXT_EVENT_STREAM)
                 .retrieve()
-                .bodyToFlux(String.class);
+                .bodyToFlux(String.class)
+                .map(response -> {
+                    try {
+                        return objectMapper.readTree(response).path("choices").get(0).path("delta").path("content").asText();
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                        return "";
+                    }
+                });
 
         return eventStream;
     }
