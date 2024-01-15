@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.madcamp.yay.chatgpt.ChatGptConfig;
 import com.madcamp.yay.chatgpt.dto.ChatGptRequest;
 import com.madcamp.yay.chatgpt.dto.Message;
-import com.madcamp.yay.chatgpt.dto.QuestionRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +31,7 @@ public class ChatGptService {
     @Value("${chatgpt.api-key}")
     private String chatGptKey;
 
-    public Flux<String> ask(QuestionRequest questionRequest) throws JsonProcessingException {
+    public Flux<String> ask(String question) throws JsonProcessingException {
 
         WebClient client = WebClient.builder()
                     .baseUrl(ChatGptConfig.URL)
@@ -44,7 +43,7 @@ public class ChatGptService {
 
         messages.add(Message.builder()
                 .role(ChatGptConfig.ROLE)
-                .content(questionRequest.getQuestion())
+                .content(question)
                 .build());
         ChatGptRequest chatGptRequest = new ChatGptRequest(
                 ChatGptConfig.MODEL,
@@ -52,12 +51,6 @@ public class ChatGptService {
                 ChatGptConfig.STREAM,
                 messages
         );
-
-//        Flux<String> eventStream = client.post()
-//                .bodyValue(objectMapper.writeValueAsString(chatGptRequest))
-//                .accept(MediaType.TEXT_EVENT_STREAM)
-//                .retrieve()
-//                .bodyToFlux(String.class);
 
         Flux<String> eventStream = client.post()
                 .bodyValue(objectMapper.writeValueAsString(chatGptRequest))
