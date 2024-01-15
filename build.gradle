@@ -34,6 +34,12 @@ dependencies {
     implementation 'io.github.flashvayne:chatgpt-spring-boot-starter:1.0.4'
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // Spring Security Starter
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Spring Web Starter (Spring MVC)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 }
 
 tasks.named('test') {
