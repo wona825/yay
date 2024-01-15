@@ -53,17 +53,25 @@ public class ChatGptService {
                 messages
         );
 
+//        Flux<String> eventStream = client.post()
+//                .bodyValue(objectMapper.writeValueAsString(chatGptRequest))
+//                .accept(MediaType.TEXT_EVENT_STREAM)
+//                .retrieve()
+//                .bodyToFlux(String.class);
+
         Flux<String> eventStream = client.post()
                 .bodyValue(objectMapper.writeValueAsString(chatGptRequest))
                 .accept(MediaType.TEXT_EVENT_STREAM)
                 .retrieve()
                 .bodyToFlux(String.class)
                 .map(response -> {
+                    // JSON 파싱하여 "content" 필드만 추출
                     try {
-                        return objectMapper.readTree(response).path("choices").get(0).path("delta").path("content").asText();
+                        return objectMapper.readTree(response).path("choices").get(0).path("delta").path("content").toString();
                     } catch (JsonProcessingException e) {
+                        // 예외 처리
                         e.printStackTrace();
-                        return "";
+                        return ""; // 또는 원하는 다른 값
                     }
                 });
 
