@@ -52,8 +52,7 @@ public class MailService {
 
         userRepository.save(user);
 
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(userRepository.findByEmail(email).get().getId());
     }
 
     public String createCertificationNumber() throws NoSuchAlgorithmException {
