@@ -39,15 +39,20 @@ public class MailService {
             throw new RuntimeException("이메일 인증에 실패하였습니다.");
         }
 
+        var checkUser = userRepository.findByEmail(email);
+        if (checkUser.isPresent()) {
+            throw new RuntimeException("중복된 이메일입니다.");
+        }
+
         User user = User.builder()
-                        .nickname(pendingRegistrationInfo.getNickname())
-                        .password(pendingRegistrationInfo.getPassword())
-                        .email(pendingRegistrationInfo.getEmail())
-                        .build();
+                .nickname(pendingRegistrationInfo.getNickname())
+                .password(pendingRegistrationInfo.getPassword())
+                .email(pendingRegistrationInfo.getEmail())
+                .build();
 
         userRepository.save(user);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(userRepository.findByEmail(email).get().getId());
     }
 
     public String createCertificationNumber() throws NoSuchAlgorithmException {
