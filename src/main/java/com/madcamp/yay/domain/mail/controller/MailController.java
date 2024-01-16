@@ -24,7 +24,7 @@ public class MailController {
     @PostMapping ("/send/v1")
     public ResponseEntity<?> mailSend(@RequestBody @Valid EmailCertificationRequest emailCertificationRequest) throws NoSuchAlgorithmException {
 
-        return mailService.joinEmail(emailCertificationRequest.getEmail());
+        return mailService.joinEmail(emailCertificationRequest);
     }
     @PostMapping("/auth-check/v1")
     public ResponseEntity<?> authCheck(@RequestBody @Valid EmailCheck emailCheck) {
