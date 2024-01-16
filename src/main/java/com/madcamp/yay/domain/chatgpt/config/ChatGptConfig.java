@@ -1,4 +1,4 @@
-package com.madcamp.yay.chatgpt;
+package com.madcamp.yay.domain.chatgpt.config;
 
 public class ChatGptConfig {
     public static final String AUTHORIZATION = "Authorization";

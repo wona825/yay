@@ -1,12 +1,12 @@
-package com.madcamp.yay.chatgpt.service;
+package com.madcamp.yay.domain.chatgpt.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.madcamp.yay.chatgpt.ChatGptConfig;
-import com.madcamp.yay.chatgpt.dto.ChatGptRequest;
-import com.madcamp.yay.chatgpt.dto.Message;
+import com.madcamp.yay.domain.chatgpt.config.ChatGptConfig;
+import com.madcamp.yay.domain.chatgpt.dto.ChatGptRequest;
+import com.madcamp.yay.domain.chatgpt.dto.Message;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,13 +58,12 @@ public class ChatGptService {
                 .retrieve()
                 .bodyToFlux(String.class)
                 .map(response -> {
-                    // JSON 파싱하여 "content" 필드만 추출
                     try {
                         return objectMapper.readTree(response).path("choices").get(0).path("delta").path("content").toString();
                     } catch (JsonProcessingException e) {
                         // 예외 처리
                         e.printStackTrace();
-                        return ""; // 또는 원하는 다른 값
+                        return "";
                     }
                 });
 

@@ -1,4 +1,4 @@
-package com.madcamp.yay.chatgpt.dto;
+package com.madcamp.yay.domain.chatgpt.dto;
 
 import lombok.Builder;
 import lombok.Getter;

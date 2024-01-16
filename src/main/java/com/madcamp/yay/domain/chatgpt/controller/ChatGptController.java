@@ -1,7 +1,7 @@
-package com.madcamp.yay.chatgpt.controller;
+package com.madcamp.yay.domain.chatgpt.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.madcamp.yay.chatgpt.service.ChatGptService;
+import com.madcamp.yay.domain.chatgpt.service.ChatGptService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
