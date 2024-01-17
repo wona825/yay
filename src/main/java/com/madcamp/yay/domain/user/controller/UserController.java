@@ -1,6 +1,7 @@
 package com.madcamp.yay.domain.user.controller;
 
 import com.madcamp.yay.domain.user.dto.FriendInfo;
+import com.madcamp.yay.domain.user.dto.LoginInfo;
 import com.madcamp.yay.domain.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,12 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PostMapping("/login/v1")
+    public ResponseEntity<?> login(@RequestBody LoginInfo loginInfo) {
+
+        return userService.login(loginInfo);
     }
 
     @PostMapping("/register-friend/v1")

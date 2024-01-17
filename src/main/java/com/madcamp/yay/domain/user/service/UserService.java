@@ -1,6 +1,7 @@
 package com.madcamp.yay.domain.user.service;
 
 import com.madcamp.yay.domain.user.dto.FriendInfo;
+import com.madcamp.yay.domain.user.dto.LoginInfo;
 import com.madcamp.yay.domain.user.entity.Friend;
 import com.madcamp.yay.domain.user.entity.User;
 import com.madcamp.yay.domain.user.repository.FriendRepository;
@@ -60,5 +61,15 @@ public class UserService {
         friendRepository.delete(friend);
 
         return ResponseEntity.ok(null);
+    }
+
+    public ResponseEntity<?> login(LoginInfo loginInfo) {
+        User user = userRepository.findByEmail(loginInfo.getEmail()).orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
+
+        if (!user.getPassword().equals(loginInfo.getPassword())) {
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        }
+
+        return ResponseEntity.ok(user.getId());
     }
 }
