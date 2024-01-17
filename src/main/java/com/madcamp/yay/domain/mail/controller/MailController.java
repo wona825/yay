@@ -26,7 +26,7 @@ public class MailController {
     }
 
     @PostMapping("/send-custom/v1")
-    public ResponseEntity<?> sendCustomEmail(@RequestParam Long userId, @RequestBody @Valid CustomEmail customEmail) {
+    public ResponseEntity<?> sendCustomEmail(@RequestParam Integer userId, @RequestBody @Valid CustomEmail customEmail) {
         String toMail = customEmail.getToMail();
         String subject = customEmail.getSubject();
         String content = customEmail.getContent();

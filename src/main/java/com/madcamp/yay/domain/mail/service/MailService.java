@@ -110,7 +110,7 @@ public class MailService {
         redisUtil.setDataExpire(Integer.toString(authCode),toMail,60*5L);
     }
 
-    public ResponseEntity<?> sendCustomEmail(Long userId, String toMail, String subject, String content) {
+    public ResponseEntity<?> sendCustomEmail(Integer userId, String toMail, String subject, String content) {
         String email = userRepository.findById(userId).get().getEmail();
         String htmlContent = "[발신자]" + email + "<br><br>" + content.replace("\n", "<br>");
 

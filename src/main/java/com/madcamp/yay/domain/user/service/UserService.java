@@ -21,7 +21,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final FriendRepository friendRepository;
 
-    public ResponseEntity<?> registerFriend(Long userId, FriendInfo friendInfo) {
+    public ResponseEntity<?> registerFriend(Integer userId, FriendInfo friendInfo) {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
@@ -40,7 +40,7 @@ public class UserService {
         return ResponseEntity.ok(null);
     }
 
-    public List<FriendInfo> getFriendList(Long userId) {
+    public List<FriendInfo> getFriendList(Integer userId) {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
@@ -54,7 +54,7 @@ public class UserService {
         return friendInfos;
     }
 
-    public ResponseEntity<?> deleteFriend(Long userId, String friendEmail) {
+    public ResponseEntity<?> deleteFriend(Integer userId, String friendEmail) {
 
         Friend friend = friendRepository.findByUserIdAndFriendEmail(userId, friendEmail).orElseThrow(() -> new RuntimeException("해당 친구를 찾을 수 없습니다."));
 

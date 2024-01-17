@@ -25,19 +25,19 @@ public class UserController {
     }
 
     @PostMapping("/register-friend/v1")
-    public ResponseEntity<?> registerFriend(@RequestParam Long userId, @RequestBody FriendInfo friendInfo) {
+    public ResponseEntity<?> registerFriend(@RequestParam Integer userId, @RequestBody FriendInfo friendInfo) {
 
         return userService.registerFriend(userId, friendInfo);
     }
 
     @DeleteMapping("/delete-friend/v1")
-    public ResponseEntity<?> deleteFriend(@RequestParam Long userId, @RequestParam String friendEmail) {
+    public ResponseEntity<?> deleteFriend(@RequestParam Integer userId, @RequestParam String friendEmail) {
 
         return userService.deleteFriend(userId, friendEmail);
     }
 
     @GetMapping("/friend-list/v1")
-    public List<FriendInfo> getFriendList(@RequestParam Long userId) {
+    public List<FriendInfo> getFriendList(@RequestParam Integer userId) {
 
         return userService.getFriendList(userId);
     }
