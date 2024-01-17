@@ -1,6 +1,6 @@
 package com.madcamp.yay.domain.mail.service;
 
-import com.madcamp.yay.domain.mail.dto.EmailCertificationRequest;
+import com.madcamp.yay.domain.mail.dto.EmailCertification;
 import com.madcamp.yay.domain.mail.redis.RedisUtil;
 import com.madcamp.yay.domain.user.entity.User;
 import com.madcamp.yay.domain.user.repository.UserRepository;
@@ -27,7 +27,7 @@ public class MailService {
     @Autowired
     private  RedisUtil redisUtil;
     private int authCode;
-    private EmailCertificationRequest pendingRegistrationInfo;
+    private EmailCertification.Request pendingRegistrationInfo;
 
     private final UserRepository userRepository;
 
@@ -67,7 +67,7 @@ public class MailService {
     }
 
 
-    public ResponseEntity<?> joinEmail(EmailCertificationRequest emailCertificationRequest) throws NoSuchAlgorithmException {
+    public ResponseEntity<?> joinEmail(EmailCertification.Request emailCertificationRequest) throws NoSuchAlgorithmException {
         pendingRegistrationInfo = emailCertificationRequest;
         authCode = Integer.parseInt(createCertificationNumber());
         String setFrom = "mail.to.yay@gmail.com";
@@ -108,5 +108,16 @@ public class MailService {
         }
 
         redisUtil.setDataExpire(Integer.toString(authCode),toMail,60*5L);
+    }
+
+    public ResponseEntity<?> sendCustomEmail(Long userId, String toMail, String subject, String content) {
+        String email = userRepository.findById(userId).get().getEmail();
+        String htmlContent = "[발신자]" + email + "<br><br>" + content.replace("\n", "<br>");
+
+        String setFrom = "mail.to.yay@gmail.com";
+        String title = "[yay 발신] " + subject;
+        mailSend("mail.to.yay@gmail.com", toMail, title, htmlContent);
+
+        return ResponseEntity.ok().build();
     }
 }
