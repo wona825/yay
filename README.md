@@ -53,6 +53,6 @@
 
 <br/>
 
-## C. Backend 개발 링크
+## C. Frontend 개발 링크
 
-https://github.com/wona825/yay.git
+https://github.com/eggsmen/yay.git
